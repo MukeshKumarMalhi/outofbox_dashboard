@@ -1,14 +1,14 @@
 @extends('layouts.a_app')
-@section('title','Categories')
+@section('title','Industries')
 @section('content')
 
     <!-- Page Content -->
-    <!-- add Category modal -->
-      <div class="modal fade" id="CategoryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- add Industry modal -->
+      <div class="modal fade" id="IndustryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add Industry</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -20,13 +20,13 @@
             <div id="append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
               <ul></ul>
             </div>
-            <form method="post" role="form" class="form-horizontal" id="category_form">
+            <form method="post" role="form" class="form-horizontal" id="industry_form">
               @csrf
               <div class="row mb-4">
                 <div class="col-md">
                   <div class="form-group">
-                    <label class="text-pink font-weight-bold">Category Name: </label>
-                    <input type="text" name="category_name" id="category_name"  class="form-control" placeholder="e.g. Web Development, Graphics Design" autocomplete="off">
+                    <label class="text-pink font-weight-bold">Industry Name: </label>
+                    <input type="text" name="industry_name" id="industry_name"  class="form-control" placeholder="e.g. Restaurant, School or Hospital" autocomplete="off">
                   </div>
                 </div>
               </div>
@@ -34,7 +34,7 @@
                 <div class="col-md">
                   <div class="form-group">
                     <label class="text-pink font-weight-bold">Attach Icon: </label>
-                    <input type="file" name="category_icon" id="category_icon" class="form-control image">
+                    <input type="file" name="industry_icon" id="industry_icon" class="form-control image">
                   </div>
                 </div>
               </div>
@@ -47,13 +47,13 @@
       </div>
       </div>
       </div>
-    <!-- add Category modal -->
-    <!-- edit Category modal -->
-      <div class="modal fade" id="EditCategoryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- add Industry modal -->
+    <!-- edit Industry modal -->
+      <div class="modal fade" id="EditIndustryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog modal-lg" role="document">
       		<div class="modal-content">
       			<div class="modal-header">
-      				<h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+      				<h5 class="modal-title" id="exampleModalLabel">Edit Industry</h5>
       				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
       					<span aria-hidden="true">&times;</span>
       				</button>
@@ -65,7 +65,7 @@
       				<div id="edit_append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
       					<ul></ul>
       				</div>
-      				<form method="post" role="form" class="form-horizontal" id="edit_category_form" enctype="multipart/form-data">
+      				<form method="post" role="form" class="form-horizontal" id="edit_industry_form" enctype="multipart/form-data">
                 @method('PATCH')
       					@csrf
                 <div class="row mb-4">
@@ -80,16 +80,16 @@
                 <div class="row mb-2">
                   <div class="col-md">
                     <div class="form-group">
-                      <label for="edit_category_name" class="text-pink font-weight-bold">Category Name: </label>
-                      <input type="text" id="edit_category_name" name="edit_category_name"  class="form-control" placeholder="e.g. Web Development, Graphics Design" autocomplete="off" autofocus required>
+                      <label class="text-pink font-weight-bold" for="edit_industry_name">Industry Name: </label>
+                      <input type="text" id="edit_industry_name" name="edit_industry_name"  class="form-control" placeholder="e.g. Restaurant, School or Hospital" autocomplete="off" autofocus required>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-2">
                   <div class="col-md-9">
                     <div class="form-group">
-                      <label for="edit_category_icon" class="text-pink font-weight-bold">Attach Icon: </label>
-                      <input type="file" id="edit_category_icon" name="edit_category_icon" class="form-control image">
+                      <label for="edit_industry_icon" class="text-pink font-weight-bold">Attach Icon: </label>
+                      <input type="file" id="edit_industry_icon" name="edit_industry_icon" class="form-control image">
                     </div>
                   </div>
                   <div class="col-md-3" id="show_image"></div>
@@ -103,9 +103,9 @@
       		</div>
       	</div>
       </div>
-      <!-- edit Category modal end -->
-      <!-- delete Category modal -->
-      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeleteCategoryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!-- edit Industry modal end -->
+      <!-- delete Industry modal -->
+      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeleteIndustryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog" role="document">
       		<div class="modal-content" style="width:200%;">
       			<div class="modal-body">
@@ -124,11 +124,11 @@
       		</div>
       	</div>
       </div>
-      <!-- edit Category modal end -->
+      <!-- edit Industry modal end -->
 
-        <div class="container-fluid" id="categories">
+        <div class="container-fluid" id="industries">
           <div class="text-right">
-            <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#CategoryModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Category</a>
+            <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#IndustryModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Industry</a>
           </div>
           <!-- table-->
           <div class="table-responsive border-bottom rounded mb-3">
@@ -136,8 +136,8 @@
                   <thead>
                       <tr>
                           <th>ID</th>
-                          <th>Category Name</th>
-                          <th>Category Icon</th>
+                          <th>Industry Name</th>
+                          <th>Industry Icon</th>
                           <th>Created at</th>
                           <th class="text-center" style="width:120px">Action</th>
                       </tr>
@@ -145,26 +145,26 @@
                   <tbody>
                       <tr>
                         {{ csrf_field() }}
-                       <?php if(isset($categories) && count($categories) > 0){ ?>
-                         @foreach($categories as $category)
-                           <tr class="Category{{$category->id}}">
-                             <td>{{ $category->id }}</td>
-                             <td>{{ $category->category_name }}</td>
+                       <?php if(isset($industries) && count($industries) > 0){ ?>
+                         @foreach($industries as $industry)
+                           <tr class="Industry{{$industry->id}}">
+                             <td>{{ $industry->id }}</td>
+                             <td>{{ $industry->industry_name }}</td>
                              <td>
-                               <div class="bs-photo bg-center-url" style="background-image: url('<?php echo asset('storage/'.$category->category_icon); ?>');">
-                                 <img src="<?php echo asset('storage/'.$category->category_icon); ?>" width="50px" height="50px"/></td>
+                               <div class="bs-photo bg-center-url" style="background-image: url('<?php echo asset('storage/'.$industry->industry_icon); ?>');">
+                                 <img src="<?php echo asset('storage/'.$industry->industry_icon); ?>" width="50px" height="50px"/></td>
                                </div>
-                             <td><?php echo date('d M Y',strtotime($category->created_at)); ?></td>
+                             <td><?php echo date('d M Y',strtotime($industry->created_at)); ?></td>
                              <td>
-                               <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $category->id }}" data-category_name="{{ $category->category_name }}" data-category_icon="{{ $category->category_icon }}" data-toggle="modal" data-target="#EditCategoryModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
-                               <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $category->id }}" data-category_name="{{ $category->category_name }}" data-category_icon="{{ $category->category_icon }}" data-toggle="modal" data-target="#DeleteCategoryModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
+                               <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $industry->id }}" data-industry_name="{{ $industry->industry_name }}" data-industry_icon="{{ $industry->industry_icon }}" data-toggle="modal" data-target="#EditIndustryModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
+                               <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $industry->id }}" data-industry_name="{{ $industry->industry_name }}" data-industry_icon="{{ $industry->industry_icon }}" data-toggle="modal" data-target="#DeleteIndustryModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
                              </td>
                            </tr>
                          @endforeach
                       <?php }else { ?>
                         <tr>
                           <th id="yet">
-                            <h2>Categories are not added yet</h2>
+                            <h2>Industries are not added yet</h2>
                           </th>
                         </tr>
                       <?php } ?>
@@ -173,8 +173,8 @@
               </table>
           </div>
           <div style="margin-top: 10px;margin-left: 440px;">
-		         <ul class="pagination-for-categories justify-content-center">
-               {{ $categories->links() }}
+		         <ul class="pagination-for-industries justify-content-center">
+               {{ $industries->links() }}
 		         </ul>
 		      </div>
         </div>
@@ -190,15 +190,15 @@
 
 
 
-    $('#CategoryModal').on('shown.bs.modal', function () {
-      $('#category_name').focus();
+    $('#IndustryModal').on('shown.bs.modal', function () {
+      $('#industry_name').focus();
     });
 
-  $('#category_form').on('submit', function(event){
+  $('#industry_form').on('submit', function(event){
 		event.preventDefault();
 
     $.ajax({
-      url:"{{ route('categories.store') }}",
+      url:"{{ route('industries.store') }}",
       method:"POST",
       data:new FormData(this),
       dataType:"JSON",
@@ -216,24 +216,24 @@
         	});
         }else {
           var date = moment(data.created_at).format("D MMM YYYY");
-					$('tbody').prepend("<tr class='Category"+data.id+"'>"+
+					$('tbody').prepend("<tr class='Industry"+data.id+"'>"+
 					"<td>" + data.id + "</td>"+
-					"<td>" + data.category_name + "</td>"+
-					"<td>" + '<img src={{ asset("/storage") }}/'+data.category_icon+' width="50px" height="50px">'+ "</td>"+
+					"<td>" + data.industry_name + "</td>"+
+					"<td>" + '<img src={{ asset("/storage") }}/'+data.industry_icon+' width="50px" height="50px">'+ "</td>"+
 					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#EditCategoryModal' data-whatever='@mdo'>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-industry_name='"+data.industry_name+"' data-industry_icon='"+data.industry_icon+"' data-toggle='modal' data-target='#EditIndustryModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#DeleteCategoryModal' data-whatever='@mdo'>"+
+					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-industry_name='"+data.industry_name+"' data-industry_icon='"+data.industry_icon+"' data-toggle='modal' data-target='#DeleteIndustryModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-trash'></i></a>"+
 					"</td>"+
 					"</tr>");
 					$('#yet').hide();
 					$('#append_errors').hide();
 					$('#append_success').show();
-					$('#append_success ul').append("<li>Category Created Successfully.</li>");
-          $('#CategoryModal').find('#category_form')[0].reset();
+					$('#append_success ul').append("<li>Industry Created Successfully.</li>");
+          $('#IndustryModal').find('#industry_form')[0].reset();
 					setTimeout(function(){ $('#append_success').hide(); },1000);
-					setTimeout(function(){ $('#CategoryModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#IndustryModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
 
@@ -245,15 +245,15 @@
 	$(document).on('click', '.edit_modal', function(){
 		$('#fid').val($(this).data('id'));
 		$('#edit_fid').val($(this).data('id'));
-		$('#edit_category_name').val($(this).data('category_name'));
-    $('#show_image').html('<img src={{ asset("storage") }}/'+$(this).data('category_icon')+' width="155px" height="150px">');
+		$('#edit_industry_name').val($(this).data('industry_name'));
+    $('#show_image').html('<img src={{ asset("storage") }}/'+$(this).data('industry_icon')+' width="155px" height="150px">');
 		$('#edit_append_errors').hide();
 		$('#edit_append_success').hide();
 	});
 
-	$('#edit_category_form').on('submit', function(event){
+	$('#edit_industry_form').on('submit', function(event){
     var idf = $('#edit_fid').val();
-    var url = "{{ url('categories') }}/"+idf;
+    var url = "{{ url('industries') }}/"+idf;
 		event.preventDefault();
     $.ajax({
       url:url,
@@ -274,23 +274,23 @@
         	});
         }else {
           var date = moment(data.created_at).format("D MMM YYYY");
-					$('.Category' + data.id).replaceWith(" "+
-					"<tr class='Category"+data.id+"'>"+
+					$('.Industry' + data.id).replaceWith(" "+
+					"<tr class='Industry"+data.id+"'>"+
 					"<td>" + data.id + "</td>"+
-					"<td>" + data.category_name + "</td>"+
-					"<td>" + '<img src={{ asset("/storage") }}/'+data.category_icon+' width="50px" height="50px">'+ "</td>"+
+					"<td>" + data.industry_name + "</td>"+
+					"<td>" + '<img src={{ asset("/storage") }}/'+data.industry_icon+' width="50px" height="50px">'+ "</td>"+
 					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#EditCategoryModal' data-whatever='@mdo'>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-industry_name='"+data.industry_name+"' data-industry_icon='"+data.industry_icon+"' data-toggle='modal' data-target='#EditIndustryModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#DeleteCategoryModal' data-whatever='@mdo'>"+
+					"<a href='#' class='delete_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-industry_name='"+data.industry_name+"' data-industry_icon='"+data.industry_icon+"' data-toggle='modal' data-target='#DeleteIndustryModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-trash'></i></a>"+
 					"</td>"+
 					"</tr>");
 					$('#edit_append_errors').hide();
 					$('#edit_append_success').show();
-					$('#edit_append_success ul').append("<li>Category Updated Successfully.</li>");
+					$('#edit_append_success ul').append("<li>Industry Updated Successfully.</li>");
           setTimeout(function(){ $('#edit_append_success').hide(); },1000);
-					setTimeout(function(){ $('#EditCategoryModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#EditIndustryModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
         }
@@ -299,7 +299,7 @@
   });
 
 	$(document).on('click', '.delete_modal', function(){
-		$('.title').html($(this).data('category_name'));
+		$('.title').html($(this).data('industry_name'));
 		$('.id').text($(this).data('id'));
 	});
 
@@ -311,7 +311,7 @@
 			'id' : $('.id').text()
 		};
     var idf = $('.id').text();
-    var url = "{{ url('categories') }}/"+idf;
+    var url = "{{ url('industries') }}/"+idf;
 
     $.ajax({
         method:'POST',
@@ -322,9 +322,9 @@
 					$('#delete_append_success ul').text('');
 					$('#delete_append_success').show();
 					$('#delete_append_success ul').append("<li>"+data+"</li>");
-          $('.Category' + $('.id').text()).remove();
+          $('.Industry' + $('.id').text()).remove();
           setTimeout(function(){ $('#delete_append_success').hide(); },1000);
-					setTimeout(function(){ $('#DeleteCategoryModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#DeleteIndustryModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
         }

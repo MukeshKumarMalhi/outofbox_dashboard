@@ -1,14 +1,14 @@
 @extends('layouts.a_app')
-@section('title','Categories')
+@section('title','Portfolios')
 @section('content')
 
     <!-- Page Content -->
-    <!-- add Category modal -->
-      <div class="modal fade" id="CategoryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- add Portfolio modal -->
+      <div class="modal fade" id="PortfolioModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add Portfolio</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -20,21 +20,63 @@
             <div id="append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
               <ul></ul>
             </div>
-            <form method="post" role="form" class="form-horizontal" id="category_form">
+            <form method="post" role="form" class="form-horizontal" id="portfolio_form" enctype="multipart/form-data">
               @csrf
-              <div class="row mb-4">
+              <div class="row">
                 <div class="col-md">
                   <div class="form-group">
-                    <label class="text-pink font-weight-bold">Category Name: </label>
-                    <input type="text" name="category_name" id="category_name"  class="form-control" placeholder="e.g. Web Development, Graphics Design" autocomplete="off">
+                    <label class="text-pink font-weight-bold">Category: </label>
+                    <select class="form-control" name="category_id" id="category_id">
+                      <option value="">Add category</option>
+                      <?php foreach ($categories as $key => $value): ?>
+                        <option value="{{ $value->id }}">{{ $value->category_name }}</option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label class="text-pink font-weight-bold">Industry: </label>
+                    <select class="form-control" name="industry_id" id="industry_id">
+                      <option value="">Add industry</option>
+                      <?php foreach ($industries as $key => $indsutry): ?>
+                        <option value="{{ $indsutry->id }}">{{ $indsutry->industry_name }}</option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label class="text-pink font-weight-bold">Title: </label>
+                    <input type="text" name="title" id="title"  class="form-control" placeholder="Enter title" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label class="text-pink font-weight-bold">Sub title: </label>
+                    <input type="text" name="sub_title" id="sub_title"  class="form-control" placeholder="Enter sub title" autocomplete="off">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label class="text-pink font-weight-bold">Body text: </label>
+                    <textarea name="body_text" class="form-control" placeholder="Enter body text" rows="8" cols="80"></textarea>
                   </div>
                 </div>
               </div>
               <div class="row mb-2">
                 <div class="col-md">
                   <div class="form-group">
-                    <label class="text-pink font-weight-bold">Attach Icon: </label>
-                    <input type="file" name="category_icon" id="category_icon" class="form-control image">
+                    <label class="text-pink font-weight-bold">Upload Images</label>
+                    <input type="file" name="images[]" class="form-control" accept="image/*" multiple>
                   </div>
                 </div>
               </div>
@@ -47,13 +89,13 @@
       </div>
       </div>
       </div>
-    <!-- add Category modal -->
-    <!-- edit Category modal -->
-      <div class="modal fade" id="EditCategoryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- add Portfolio modal -->
+    <!-- edit Portfolio modal -->
+      <div class="modal fade" id="EditPortfolioModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog modal-lg" role="document">
       		<div class="modal-content">
       			<div class="modal-header">
-      				<h5 class="modal-title" id="exampleModalLabel">Edit Category</h5>
+      				<h5 class="modal-title" id="exampleModalLabel">Edit Portfolio</h5>
       				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
       					<span aria-hidden="true">&times;</span>
       				</button>
@@ -65,7 +107,7 @@
       				<div id="edit_append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
       					<ul></ul>
       				</div>
-      				<form method="post" role="form" class="form-horizontal" id="edit_category_form" enctype="multipart/form-data">
+      				<form method="post" role="form" class="form-horizontal" id="edit_portfolio_form" enctype="multipart/form-data">
                 @method('PATCH')
       					@csrf
                 <div class="row mb-4">
@@ -80,16 +122,16 @@
                 <div class="row mb-2">
                   <div class="col-md">
                     <div class="form-group">
-                      <label for="edit_category_name" class="text-pink font-weight-bold">Category Name: </label>
-                      <input type="text" id="edit_category_name" name="edit_category_name"  class="form-control" placeholder="e.g. Web Development, Graphics Design" autocomplete="off" autofocus required>
+                      <label for="edit_portfolio_name" class="text-pink font-weight-bold">Portfolio Name: </label>
+                      <input type="text" id="edit_portfolio_name" name="edit_portfolio_name"  class="form-control" placeholder="e.g. Web Development, Graphics Design" autocomplete="off" autofocus required>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-2">
                   <div class="col-md-9">
                     <div class="form-group">
-                      <label for="edit_category_icon" class="text-pink font-weight-bold">Attach Icon: </label>
-                      <input type="file" id="edit_category_icon" name="edit_category_icon" class="form-control image">
+                      <label for="edit_portfolio_icon" class="text-pink font-weight-bold">Attach Icon: </label>
+                      <input type="file" id="edit_portfolio_icon" name="edit_portfolio_icon" class="form-control image">
                     </div>
                   </div>
                   <div class="col-md-3" id="show_image"></div>
@@ -103,9 +145,9 @@
       		</div>
       	</div>
       </div>
-      <!-- edit Category modal end -->
-      <!-- delete Category modal -->
-      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeleteCategoryModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!-- edit Portfolio modal end -->
+      <!-- delete Portfolio modal -->
+      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeletePortfolioModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog" role="document">
       		<div class="modal-content" style="width:200%;">
       			<div class="modal-body">
@@ -124,11 +166,11 @@
       		</div>
       	</div>
       </div>
-      <!-- edit Category modal end -->
+      <!-- edit Portfolio modal end -->
 
-        <div class="container-fluid" id="categories">
+        <div class="container-fluid" id="portfolios">
           <div class="text-right">
-            <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#CategoryModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Category</a>
+            <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#PortfolioModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Portfolio</a>
           </div>
           <!-- table-->
           <div class="table-responsive border-bottom rounded mb-3">
@@ -136,8 +178,8 @@
                   <thead>
                       <tr>
                           <th>ID</th>
-                          <th>Category Name</th>
-                          <th>Category Icon</th>
+                          <th>Portfolio Name</th>
+                          <th>Portfolio Icon</th>
                           <th>Created at</th>
                           <th class="text-center" style="width:120px">Action</th>
                       </tr>
@@ -145,26 +187,26 @@
                   <tbody>
                       <tr>
                         {{ csrf_field() }}
-                       <?php if(isset($categories) && count($categories) > 0){ ?>
-                         @foreach($categories as $category)
-                           <tr class="Category{{$category->id}}">
-                             <td>{{ $category->id }}</td>
-                             <td>{{ $category->category_name }}</td>
+                       <?php if(isset($portfolios) && count($portfolios) > 0){ ?>
+                         @foreach($portfolios as $portfolio)
+                           <tr class="Portfolio{{$portfolio->id}}">
+                             <td>{{ $portfolio->id }}</td>
+                             <td>{{ $portfolio->portfolio_name }}</td>
                              <td>
-                               <div class="bs-photo bg-center-url" style="background-image: url('<?php echo asset('storage/'.$category->category_icon); ?>');">
-                                 <img src="<?php echo asset('storage/'.$category->category_icon); ?>" width="50px" height="50px"/></td>
+                               <div class="bs-photo bg-center-url" style="background-image: url('<?php echo asset('storage/'.$portfolio->portfolio_icon); ?>');">
+                                 <img src="<?php echo asset('storage/'.$portfolio->portfolio_icon); ?>" width="50px" height="50px"/></td>
                                </div>
-                             <td><?php echo date('d M Y',strtotime($category->created_at)); ?></td>
+                             <td><?php echo date('d M Y',strtotime($portfolio->created_at)); ?></td>
                              <td>
-                               <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $category->id }}" data-category_name="{{ $category->category_name }}" data-category_icon="{{ $category->category_icon }}" data-toggle="modal" data-target="#EditCategoryModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
-                               <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $category->id }}" data-category_name="{{ $category->category_name }}" data-category_icon="{{ $category->category_icon }}" data-toggle="modal" data-target="#DeleteCategoryModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
+                               <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $portfolio->id }}" data-portfolio_name="{{ $portfolio->portfolio_name }}" data-portfolio_icon="{{ $portfolio->portfolio_icon }}" data-toggle="modal" data-target="#EditPortfolioModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
+                               <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $portfolio->id }}" data-portfolio_name="{{ $portfolio->portfolio_name }}" data-portfolio_icon="{{ $portfolio->portfolio_icon }}" data-toggle="modal" data-target="#DeletePortfolioModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
                              </td>
                            </tr>
                          @endforeach
                       <?php }else { ?>
                         <tr>
                           <th id="yet">
-                            <h2>Categories are not added yet</h2>
+                            <h2>Portfolios are not added yet</h2>
                           </th>
                         </tr>
                       <?php } ?>
@@ -173,8 +215,8 @@
               </table>
           </div>
           <div style="margin-top: 10px;margin-left: 440px;">
-		         <ul class="pagination-for-categories justify-content-center">
-               {{ $categories->links() }}
+		         <ul class="pagination-for-portfolios justify-content-center">
+               {{ $portfolios->links() }}
 		         </ul>
 		      </div>
         </div>
@@ -190,15 +232,15 @@
 
 
 
-    $('#CategoryModal').on('shown.bs.modal', function () {
-      $('#category_name').focus();
+    $('#PortfolioModal').on('shown.bs.modal', function () {
+      $('#portfolio_name').focus();
     });
 
-  $('#category_form').on('submit', function(event){
+  $('#portfolio_form').on('submit', function(event){
 		event.preventDefault();
 
     $.ajax({
-      url:"{{ route('categories.store') }}",
+      url:"{{ route('portfolios.store') }}",
       method:"POST",
       data:new FormData(this),
       dataType:"JSON",
@@ -216,26 +258,27 @@
         	});
         }else {
           var date = moment(data.created_at).format("D MMM YYYY");
-					$('tbody').prepend("<tr class='Category"+data.id+"'>"+
-					"<td>" + data.id + "</td>"+
-					"<td>" + data.category_name + "</td>"+
-					"<td>" + '<img src={{ asset("/storage") }}/'+data.category_icon+' width="50px" height="50px">'+ "</td>"+
-					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#EditCategoryModal' data-whatever='@mdo'>"+
-					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#DeleteCategoryModal' data-whatever='@mdo'>"+
-					"<i class='fas fa-trash'></i></a>"+
-					"</td>"+
-					"</tr>");
+					// $('tbody').prepend("<tr class='Portfolio"+data.id+"'>"+
+					// "<td>" + data.id + "</td>"+
+					// "<td>" + data.portfolio_name + "</td>"+
+					// "<td>" + '<img src={{ asset("/storage") }}/'+data.portfolio_icon+' width="50px" height="50px">'+ "</td>"+
+					// "<td>" + date + "</td>"+
+					// "<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-portfolio_name='"+data.portfolio_name+"' data-portfolio_icon='"+data.portfolio_icon+"' data-toggle='modal' data-target='#EditPortfolioModal' data-whatever='@mdo'>"+
+					// "<i class='fas fa-edit'></i></a> "+
+					// "<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-portfolio_name='"+data.portfolio_name+"' data-portfolio_icon='"+data.portfolio_icon+"' data-toggle='modal' data-target='#DeletePortfolioModal' data-whatever='@mdo'>"+
+					// "<i class='fas fa-trash'></i></a>"+
+					// "</td>"+
+					// "</tr>");
 					$('#yet').hide();
 					$('#append_errors').hide();
 					$('#append_success').show();
-					$('#append_success ul').append("<li>Category Created Successfully.</li>");
-          $('#CategoryModal').find('#category_form')[0].reset();
+					$('#append_success ul').append("<li>Portfolio Created Successfully.</li>");
+          $('#PortfolioModal').find('#portfolio_form')[0].reset();
 					setTimeout(function(){ $('#append_success').hide(); },1000);
-					setTimeout(function(){ $('#CategoryModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#PortfolioModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
+          location.reload();
 
 	      }
       },
@@ -245,15 +288,15 @@
 	$(document).on('click', '.edit_modal', function(){
 		$('#fid').val($(this).data('id'));
 		$('#edit_fid').val($(this).data('id'));
-		$('#edit_category_name').val($(this).data('category_name'));
-    $('#show_image').html('<img src={{ asset("storage") }}/'+$(this).data('category_icon')+' width="155px" height="150px">');
+		$('#edit_portfolio_name').val($(this).data('portfolio_name'));
+    $('#show_image').html('<img src={{ asset("storage") }}/'+$(this).data('portfolio_icon')+' width="155px" height="150px">');
 		$('#edit_append_errors').hide();
 		$('#edit_append_success').hide();
 	});
 
-	$('#edit_category_form').on('submit', function(event){
+	$('#edit_portfolio_form').on('submit', function(event){
     var idf = $('#edit_fid').val();
-    var url = "{{ url('categories') }}/"+idf;
+    var url = "{{ url('portfolios') }}/"+idf;
 		event.preventDefault();
     $.ajax({
       url:url,
@@ -274,23 +317,23 @@
         	});
         }else {
           var date = moment(data.created_at).format("D MMM YYYY");
-					$('.Category' + data.id).replaceWith(" "+
-					"<tr class='Category"+data.id+"'>"+
+					$('.Portfolio' + data.id).replaceWith(" "+
+					"<tr class='Portfolio"+data.id+"'>"+
 					"<td>" + data.id + "</td>"+
-					"<td>" + data.category_name + "</td>"+
-					"<td>" + '<img src={{ asset("/storage") }}/'+data.category_icon+' width="50px" height="50px">'+ "</td>"+
+					"<td>" + data.portfolio_name + "</td>"+
+					"<td>" + '<img src={{ asset("/storage") }}/'+data.portfolio_icon+' width="50px" height="50px">'+ "</td>"+
 					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#EditCategoryModal' data-whatever='@mdo'>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-portfolio_name='"+data.portfolio_name+"' data-portfolio_icon='"+data.portfolio_icon+"' data-toggle='modal' data-target='#EditPortfolioModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-category_name='"+data.category_name+"' data-category_icon='"+data.category_icon+"' data-toggle='modal' data-target='#DeleteCategoryModal' data-whatever='@mdo'>"+
+					"<a href='#' class='delete_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-portfolio_name='"+data.portfolio_name+"' data-portfolio_icon='"+data.portfolio_icon+"' data-toggle='modal' data-target='#DeletePortfolioModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-trash'></i></a>"+
 					"</td>"+
 					"</tr>");
 					$('#edit_append_errors').hide();
 					$('#edit_append_success').show();
-					$('#edit_append_success ul').append("<li>Category Updated Successfully.</li>");
+					$('#edit_append_success ul').append("<li>Portfolio Updated Successfully.</li>");
           setTimeout(function(){ $('#edit_append_success').hide(); },1000);
-					setTimeout(function(){ $('#EditCategoryModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#EditPortfolioModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
         }
@@ -299,7 +342,7 @@
   });
 
 	$(document).on('click', '.delete_modal', function(){
-		$('.title').html($(this).data('category_name'));
+		$('.title').html($(this).data('portfolio_name'));
 		$('.id').text($(this).data('id'));
 	});
 
@@ -311,7 +354,7 @@
 			'id' : $('.id').text()
 		};
     var idf = $('.id').text();
-    var url = "{{ url('categories') }}/"+idf;
+    var url = "{{ url('portfolios') }}/"+idf;
 
     $.ajax({
         method:'POST',
@@ -322,9 +365,9 @@
 					$('#delete_append_success ul').text('');
 					$('#delete_append_success').show();
 					$('#delete_append_success ul').append("<li>"+data+"</li>");
-          $('.Category' + $('.id').text()).remove();
+          $('.Portfolio' + $('.id').text()).remove();
           setTimeout(function(){ $('#delete_append_success').hide(); },1000);
-					setTimeout(function(){ $('#DeleteCategoryModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#DeletePortfolioModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
         }

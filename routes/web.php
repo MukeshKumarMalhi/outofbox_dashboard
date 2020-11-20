@@ -22,3 +22,9 @@ Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout
 
 Auth::routes();
 Route::get('admin/dashboard', [App\Http\Controllers\Admin\AdminController::class, 'admin_dashboard']);
+Route::get('admin/view_categories', [App\Http\Controllers\Admin\CategoryController::class, 'index']);
+Route::get('admin/view_industries', [App\Http\Controllers\Admin\IndustryController::class, 'index']);
+Route::get('admin/view_portfolios', [App\Http\Controllers\Admin\PortfolioController::class, 'index']);
+Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
+Route::resource('industries', App\Http\Controllers\Admin\IndustryController::class);
+Route::resource('portfolios', App\Http\Controllers\Admin\PortfolioController::class);
