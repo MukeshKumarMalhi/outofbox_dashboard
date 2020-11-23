@@ -8,5 +8,6 @@
         <li class="nav-item"><a href="{{ url('admin/view_categories') }}"><i class="fa-li fal fa-list text-light"></i><span>Categories</span></a></li>
         <li class="nav-item"><a href="{{ url('admin/view_industries') }}"><i class="fa-li fal fa-industry text-light" aria-hidden="true"></i><span>Industries</span></a></li>
         <li class="nav-item"><a href="{{ url('admin/view_portfolios') }}"><i class="fa-li fal fa-briefcase text-light" aria-hidden="true"></i><span>Portfolios</span></a></li>
+        <li class="nav-item"><a href="{{ url('admin/view_websites') }}"><i class="fa-li fal fa-globe text-light" aria-hidden="true"></i><span>Websites</span></a></li>
     </ul>
 </div>

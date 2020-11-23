@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Website extends Model
+class PortfolioImage extends Model
 {
     use HasFactory;
     protected $primaryKey='id';
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public function portfolio_website()
+    public function portfolio()
     {
-        return $this->hasMany('App\PortfolioWebsite','website_id');
-    }
-    public function page()
-    {
-        return $this->hasMany('App\Page','website_id');
+        return $this->belongsTo('App\Portfolio','portfolio_id');
     }
 
     /**
@@ -27,6 +23,6 @@ class Website extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'website_name', 'website_slug', 'website_url'
+        'id', 'portfolio_id', 'image_url', 'image_name', 'image_type', 'image_size'
     ];
 }

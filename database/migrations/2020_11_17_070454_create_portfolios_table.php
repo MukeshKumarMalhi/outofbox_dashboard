@@ -20,7 +20,6 @@ class CreatePortfoliosTable extends Migration
           $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade')->onUpdate('cascade');
           $table->string('industry_id')->nullable();
           $table->foreign('industry_id')->references('id')->on('industries')->onDelete('cascade')->onUpdate('cascade');
-          $table->text('images')->nullable();
           $table->string('title')->nullable();
           $table->string('sub_title')->nullable();
           $table->text('body_text')->nullable();

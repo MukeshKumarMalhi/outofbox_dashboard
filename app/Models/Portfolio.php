@@ -24,6 +24,10 @@ class Portfolio extends Model
   {
       return $this->hasMany('App\PortfolioWebsite','portfolio_id');
   }
+  public function portfolio_image()
+  {
+      return $this->hasMany('App\PortfolioImage','portfolio_id');
+  }
 
   /**
    * The attributes that are mass assignable.
@@ -31,6 +35,6 @@ class Portfolio extends Model
    * @var array
    */
   protected $fillable = [
-      'id', 'category_id', 'industry_id', 'images', 'title', 'sub_title', 'body_text'
+      'id', 'category_id', 'industry_id', 'title', 'sub_title', 'body_text'
   ];
 }
