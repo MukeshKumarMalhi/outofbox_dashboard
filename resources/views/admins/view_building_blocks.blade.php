@@ -1,14 +1,14 @@
 @extends('layouts.a_app')
-@section('title','Websites')
+@section('title',"Building Blocks")
 @section('content')
 
-    <!-- Page Content -->
-    <!-- add Website modal -->
-      <div class="modal fade" id="WebsiteModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Block Content -->
+    <!-- add Block modal -->
+      <div class="modal fade" id="BlockModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Website</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Add Block</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -20,29 +20,21 @@
             <div id="append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
               <ul></ul>
             </div>
-            <form method="post" role="form" class="form-horizontal" id="website_form">
+            <form method="post" role="form" class="form-horizontal" id="block_form">
               @csrf
               <div class="row mb-4">
                 <div class="col-md">
                   <div class="form-group">
-                    <label class="text-pink font-weight-bold">Website Name: </label>
-                    <input type="text" name="website_name" id="website_name"  class="form-control" placeholder="Enter name" autocomplete="off" required>
+                    <label class="text-pink font-weight-bold">Block Name: </label>
+                    <input type="text" name="building_block_name" id="building_block_name" class="form-control" placeholder="Enter name" autocomplete="off" required>
                   </div>
                 </div>
               </div>
               <div class="row mb-2">
                 <div class="col-md">
                   <div class="form-group">
-                    <label class="text-pink font-weight-bold">Website Slug: </label>
-                    <input type="text" name="website_slug" id="website_slug"  class="form-control" placeholder="Enter slug" autocomplete="off" required>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-2">
-                <div class="col-md">
-                  <div class="form-group">
-                    <label class="text-pink font-weight-bold">Website URL: </label>
-                    <input type="text" name="website_url" id="website_url"  class="form-control" placeholder="Enter URL" autocomplete="off" required>
+                    <label class="text-pink font-weight-bold">Block Html Code: </label>
+                    <textarea name="building_block_html_code" class="form-control" rows="8" cols="80"></textarea>
                   </div>
                 </div>
               </div>
@@ -55,13 +47,13 @@
       </div>
       </div>
       </div>
-    <!-- add Website modal -->
-    <!-- edit Website modal -->
-      <div class="modal fade" id="EditWebsiteModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- add Block modal -->
+    <!-- edit Block modal -->
+      <div class="modal fade" id="EditBlockModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog modal-lg" role="document">
       		<div class="modal-content">
       			<div class="modal-header">
-      				<h5 class="modal-title" id="exampleModalLabel">Edit Website</h5>
+      				<h5 class="modal-title" id="exampleModalLabel">Edit Block</h5>
       				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
       					<span aria-hidden="true">&times;</span>
       				</button>
@@ -73,7 +65,7 @@
       				<div id="edit_append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
       					<ul></ul>
       				</div>
-      				<form method="post" role="form" class="form-horizontal" id="edit_website_form" enctype="multipart/form-data">
+      				<form method="post" role="form" class="form-horizontal" id="edit_block_form" enctype="multipart/form-data">
                 @method('PATCH')
       					@csrf
                 <div class="row mb-4">
@@ -88,24 +80,16 @@
                 <div class="row mb-2">
                   <div class="col-md">
                     <div class="form-group">
-                      <label for="edit_website_name" class="text-pink font-weight-bold">Website Name: </label>
-                      <input type="text" id="edit_website_name" name="edit_website_name" class="form-control" placeholder="Enter name" autocomplete="off" autofocus required>
+                      <label for="edit_building_block_name" class="text-pink font-weight-bold">Block Name: </label>
+                      <input type="text" name="edit_building_block_name" id="edit_building_block_name" class="form-control" placeholder="Enter name" autocomplete="off" required>
                     </div>
                   </div>
                 </div>
                 <div class="row mb-2">
                   <div class="col-md">
                     <div class="form-group">
-                      <label for="edit_website_slug" class="text-pink font-weight-bold">Website Slug: </label>
-                      <input type="text" id="edit_website_slug" name="edit_website_slug" class="form-control" placeholder="Enter slug" autocomplete="off" autofocus required>
-                    </div>
-                  </div>
-                </div>
-                <div class="row mb-2">
-                  <div class="col-md">
-                    <div class="form-group">
-                      <label for="edit_website_url" class="text-pink font-weight-bold">Website URL: </label>
-                      <input type="text" id="edit_website_url" name="edit_website_url" class="form-control" placeholder="Enter URL" autocomplete="off" autofocus required>
+                      <label for="edit_building_block_html_code" class="text-pink font-weight-bold">Block Html Code: </label>
+                      <textarea name="edit_building_block_html_code" id="edit_building_block_html_code" class="form-control" rows="8" cols="80"></textarea>
                     </div>
                   </div>
                 </div>
@@ -118,9 +102,9 @@
       		</div>
       	</div>
       </div>
-      <!-- edit Website modal end -->
-      <!-- delete Website modal -->
-      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeleteWebsiteModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!-- edit Block modal end -->
+      <!-- delete Block modal -->
+      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeleteBlockModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       	<div class="modal-dialog" role="document">
       		<div class="modal-content" style="width:200%;">
       			<div class="modal-body">
@@ -139,54 +123,54 @@
       		</div>
       	</div>
       </div>
-      <!-- edit Website modal end -->
+      <!-- edit Block modal end -->
 
-        <div class="container-fluid" id="websites">
-          <div class="text-right">
-            <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#WebsiteModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Website</a>
+        <div class="container-fluid" id="blocks">
+          <div class="row">
+            <div class="col-md-6 text-left">
+            </div>
+            <div class="col-md-6 text-right">
+              <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#BlockModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Block</a>
+            </div>
           </div>
           <!-- table-->
           <div class="table-responsive border-bottom rounded mb-3">
-              <table class="table bs-table" id="userTable">
+              <table class="table bs-table" id="blocks">
                   <thead>
                       <tr>
                           <th>Name</th>
-                          <th>Slug</th>
-                          <th>URL</th>
+                          <th>Code</th>
                           <th>Created at</th>
                           <th class="text-center" style="width:120px">Action</th>
                       </tr>
                   </thead>
                   <tbody>
-                      <tr>
-                        {{ csrf_field() }}
-                       <?php if(isset($websites) && count($websites) > 0){ ?>
-                         @foreach($websites as $website)
-                           <tr class="Website{{$website->id}}">
-                             <td>{{ $website->website_name }}</td>
-                             <td><a style="color: blue; text-decoration: underline;" href="{{ route('admin.websites.show', $website->id) }}">{{ $website->website_slug }}</a></td>
-                             <td>{{ $website->website_url }}</td>
-                             <td><?php echo date('d M Y',strtotime($website->created_at)); ?></td>
-                             <td>
-                               <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $website->id }}" data-website_name="{{ $website->website_name }}" data-website_slug="{{ $website->website_slug }}" data-website_url="{{ $website->website_url }}" data-toggle="modal" data-target="#EditWebsiteModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
-                               <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $website->id }}" data-website_name="{{ $website->website_name }}" data-toggle="modal" data-target="#DeleteWebsiteModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
-                             </td>
-                           </tr>
-                         @endforeach
-                      <?php }else { ?>
-                        <tr>
-                          <th id="yet">
-                            <h2>Websites are not added yet</h2>
-                          </th>
-                        </tr>
-                      <?php } ?>
-                      </tr>
+                    {{ csrf_field() }}
+                   <?php if(isset($building_blocks) && count($building_blocks) > 0){ ?>
+                     @foreach($building_blocks as $block)
+                       <tr class="Block{{$block->id}}">
+                         <td>{{ $block->building_block_name }}</td>
+                         <td>{{ $block->building_block_html_code }}</td>
+                         <td><?php echo date('d M Y',strtotime($block->created_at)); ?></td>
+                         <td>
+                           <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $block->id }}" data-building_block_name="{{ $block->building_block_name }}" data-building_block_html_code="{{ $block->building_block_html_code }}" data-toggle="modal" data-target="#EditBlockModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
+                           <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $block->id }}" data-building_block_name="{{ $block->building_block_name }}" data-toggle="modal" data-target="#DeleteBlockModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
+                         </td>
+                       </tr>
+                     @endforeach
+                  <?php }else { ?>
+                    <tr>
+                      <th id="yet">
+                        <h2>Blocks are not added yet</h2>
+                      </th>
+                    </tr>
+                  <?php } ?>
                   </tbody>
               </table>
           </div>
           <div style="margin-top: 10px;margin-left: 440px;">
-		         <ul class="pagination-for-websites justify-content-center">
-               {{ $websites->links() }}
+		         <ul class="pagination-for-blocks justify-content-center">
+               {{ $building_blocks->links() }}
 		         </ul>
 		      </div>
         </div>
@@ -202,15 +186,15 @@
 
 
 
-    $('#WebsiteModal').on('shown.bs.modal', function () {
-      $('#website_name').focus();
+    $('#BlockModal').on('shown.bs.modal', function () {
+      $('#building_block_name').focus();
     });
 
-  $('#website_form').on('submit', function(event){
+  $('#block_form').on('submit', function(event){
 		event.preventDefault();
 
     $.ajax({
-      url:"{{ route('admin.websites.store') }}",
+      url:"{{ route('admin.building_blocks.store') }}",
       method:"POST",
       data:new FormData(this),
       dataType:"JSON",
@@ -228,27 +212,25 @@
         	});
         }else {
           var date = moment(data.created_at).format("D MMM YYYY");
-					$('tbody').prepend("<tr class='Website"+data.id+"'>"+
-					"<td>" + data.website_name + "</td>"+
-					"<td>" + data.website_slug + "</td>"+
-					"<td>" + data.website_url + "</td>"+
+					$('tbody').prepend("<tr class='Block"+data.id+"'>"+
+					"<td>" + data.building_block_name + "</td>"+
+					"<td>" + data.building_block_html_code + "</td>"+
 					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-website_name='"+data.website_name+"' data-website_slug='"+data.website_slug+"' data-website_url='"+data.website_url+"' data-toggle='modal' data-target='#EditWebsiteModal' data-whatever='@mdo'>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-website_name='"+data.website_name+"' data-toggle='modal' data-target='#DeleteWebsiteModal' data-whatever='@mdo'>"+
+					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-trash'></i></a>"+
 					"</td>"+
 					"</tr>");
 					$('#yet').hide();
 					$('#append_errors').hide();
 					$('#append_success').show();
-					$('#append_success ul').append("<li>Website Created Successfully.</li>");
-          $('#WebsiteModal').find('#website_form')[0].reset();
+					$('#append_success ul').append("<li>Block Created Successfully.</li>");
+          $('#BlockModal').find('#block_form')[0].reset();
 					setTimeout(function(){ $('#append_success').hide(); },1000);
-					setTimeout(function(){ $('#WebsiteModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#BlockModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
-
 	      }
       },
     });
@@ -257,16 +239,15 @@
 	$(document).on('click', '.edit_modal', function(){
 		$('#fid').val($(this).data('id'));
 		$('#edit_fid').val($(this).data('id'));
-		$('#edit_website_name').val($(this).data('website_name'));
-		$('#edit_website_slug').val($(this).data('website_slug'));
-		$('#edit_website_url').val($(this).data('website_url'));
+		$('#edit_building_block_name').val($(this).data('building_block_name'));
+		$('#edit_building_block_html_code').text($(this).data('building_block_html_code'));
 		$('#edit_append_errors').hide();
 		$('#edit_append_success').hide();
 	});
 
-	$('#edit_website_form').on('submit', function(event){
+	$('#edit_block_form').on('submit', function(event){
     var idf = $('#edit_fid').val();
-    var url = "{{ url('admin/websites') }}/"+idf;
+    var url = "{{ url('admin/building_blocks') }}/"+idf;
 		event.preventDefault();
     $.ajax({
       url:url,
@@ -287,23 +268,22 @@
         	});
         }else {
           var date = moment(data.created_at).format("D MMM YYYY");
-					$('.Website' + data.id).replaceWith(" "+
-					"<tr class='Website"+data.id+"'>"+
-					"<td>" + data.website_name + "</td>"+
-          "<td>" + data.website_slug + "</td>"+
-					"<td>" + data.website_url + "</td>"+
+					$('.Block' + data.id).replaceWith(" "+
+					"<tr class='Block"+data.id+"'>"+
+					"<td>" + data.building_block_name + "</td>"+
+          "<td>" + data.building_block_html_code + "</td>"+
 					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-website_name='"+data.website_name+"' data-website_slug='"+data.website_slug+"' data-website_url='"+data.website_url+"' data-toggle='modal' data-target='#EditWebsiteModal' data-whatever='@mdo'>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger  mb-2' data-id='"+data.id+"' data-website_name='"+data.website_name+"' data-toggle='modal' data-target='#DeleteWebsiteModal' data-whatever='@mdo'>"+
+					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
 					"<i class='fas fa-trash'></i></a>"+
 					"</td>"+
 					"</tr>");
 					$('#edit_append_errors').hide();
 					$('#edit_append_success').show();
-					$('#edit_append_success ul').append("<li>Website Updated Successfully.</li>");
+					$('#edit_append_success ul').append("<li>Block Updated Successfully.</li>");
           setTimeout(function(){ $('#edit_append_success').hide(); },1000);
-					setTimeout(function(){ $('#EditWebsiteModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#EditBlockModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
         }
@@ -312,7 +292,7 @@
   });
 
 	$(document).on('click', '.delete_modal', function(){
-		$('.title').html($(this).data('website_name'));
+		$('.title').html($(this).data('building_block_name'));
 		$('.id').text($(this).data('id'));
 	});
 
@@ -324,7 +304,7 @@
 			'id' : $('.id').text()
 		};
     var idf = $('.id').text();
-    var url = "{{ url('admin/websites') }}/"+idf;
+    var url = "{{ url('admin/building_blocks') }}/"+idf;
 
     $.ajax({
         method:'POST',
@@ -335,9 +315,9 @@
 					$('#delete_append_success ul').text('');
 					$('#delete_append_success').show();
 					$('#delete_append_success ul').append("<li>"+data+"</li>");
-          $('.Website' + $('.id').text()).remove();
+          $('.Block' + $('.id').text()).remove();
           setTimeout(function(){ $('#delete_append_success').hide(); },1000);
-					setTimeout(function(){ $('#DeleteWebsiteModal').modal('hide'); },2000);
+					setTimeout(function(){ $('#DeleteBlockModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
         }

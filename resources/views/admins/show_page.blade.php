@@ -1,0 +1,282 @@
+@extends('layouts.a_app')
+@section('title',"Building Blocks")
+@section('content')
+
+    <!-- Block Content -->
+    <!-- add Block modal -->
+      <div class="modal fade" id="BlockModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Block</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="append_errors" style="color: #a94442; background-color: #f2dede; border-color: #ebccd1; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
+              <ul></ul>
+            </div>
+            <div id="append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
+              <ul></ul>
+            </div>
+            <form method="post" role="form" class="form-horizontal" id="block_form">
+              @csrf
+              <div class="row mb-4">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label class="text-pink font-weight-bold">Block Name: </label>
+                    <input type="text" name="building_block_name" id="building_block_name" class="form-control" placeholder="Enter name" autocomplete="off" required>
+                    <input type="hidden" name="page_id" value="{{ $page->id }}">
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2">
+                <div class="col-md">
+                  <div class="form-group">
+                    <label class="text-pink font-weight-bold">Block Html Code: </label>
+                    <textarea name="building_block_html_code" class="form-control" rows="8" cols="80"></textarea>
+                  </div>
+                </div>
+              </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-dark" id="add">Save</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      </div>
+      </div>
+    <!-- add Block modal -->
+    <!-- edit Block modal -->
+      <div class="modal fade" id="EditBlockModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      	<div class="modal-dialog modal-lg" role="document">
+      		<div class="modal-content">
+      			<div class="modal-header">
+      				<h5 class="modal-title" id="exampleModalLabel">Edit Block</h5>
+      				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      					<span aria-hidden="true">&times;</span>
+      				</button>
+      			</div>
+      			<div class="modal-body">
+      				<div id="edit_append_errors" style="color: #a94442; background-color: #f2dede; border-color: #ebccd1; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
+      					<ul></ul>
+      				</div>
+      				<div id="edit_append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
+      					<ul></ul>
+      				</div>
+      				<form method="post" role="form" class="form-horizontal" id="edit_block_form" enctype="multipart/form-data">
+      					@csrf
+                <div class="row mb-4">
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label for="fid" class="text-pink font-weight-bold">ID : </label>
+                      <input type="text" id="fid" name="fid" class="form-control" disabled>
+                      <input type="hidden" id="edit_fid" name="edit_fid">
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label for="edit_building_block_name" class="text-pink font-weight-bold">Block Name: </label>
+                      <input type="text" name="edit_building_block_name" id="edit_building_block_name" class="form-control" placeholder="Enter name" autocomplete="off" required>
+                      <input type="hidden" name="page_id" value="{{ $page->id }}">
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-md">
+                    <div class="form-group">
+                      <label for="edit_building_block_html_code" class="text-pink font-weight-bold">Block Html Code: </label>
+                      <textarea name="edit_building_block_html_code" id="edit_building_block_html_code" class="form-control" rows="8" cols="80"></textarea>
+                    </div>
+                  </div>
+                </div>
+      				</div>
+      				<div class="modal-footer">
+      					<button type="submit" class="edit btn btn-dark">Update</button>
+      					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      				</div>
+      			</form>
+      		</div>
+      	</div>
+      </div>
+      <!-- edit Block modal end -->
+      <!-- delete Block modal -->
+      <div class="modal fade" style="margin-left: -250px; margin-top: 20px;" id="DeleteBlockModal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      	<div class="modal-dialog" role="document">
+      		<div class="modal-content" style="width:200%;">
+      			<div class="modal-body">
+              <div id="delete_append_success" style="color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6; border-radius: 5px; padding: 17px 0px 1px 0px; margin-bottom: 30px; display: none;">
+                <ul></ul>
+              </div>
+      				<div class="deletecontent">
+      					Are you sure want to delete <span class="title" style="font-size: 18px; font-weight: 500;"></span>?
+      					<span class="id" style="display: none;"></span>
+      				</div>
+      			</div>
+      			<div class="modal-footer">
+      				<button type="button" class="delete btn btn-dark">Delete</button>
+      				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      			</div>
+      		</div>
+      	</div>
+      </div>
+      <!-- edit Block modal end -->
+
+        <div class="container-fluid" id="blocks">
+          <div class="row">
+            <div class="col-md-6 text-left">
+            </div>
+            <div class="col-md-6 text-right">
+              <a class="btn bg-dark text-light my-2" data-toggle="modal" data-target="#BlockModal" data-whatever="@mdo"><i class="fa fa-plus-circle" aria-hidden="true"></i> Add Block</a>
+            </div>
+          </div>
+          <!-- table-->
+          <div class="table-responsive border-bottom rounded mb-3">
+              <table class="table bs-table" id="blocks">
+                  <thead>
+                      <tr>
+                          <th>Name</th>
+                          <th>Code</th>
+                          <th>Created at</th>
+                          <th class="text-center" style="width:120px">Action</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+              </table>
+          </div>
+          <div style="margin-top: 10px;margin-left: 440px;">
+		         <ul class="pagination-for-blocks justify-content-center">
+		         </ul>
+		      </div>
+        </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+
+
+
+    $('#BlockModal').on('shown.bs.modal', function () {
+      $('#building_block_name').focus();
+    });
+
+  $('#block_form').on('submit', function(event){
+		event.preventDefault();
+
+    $.ajax({
+      url:"{{ url('admin/store_block') }}",
+      method:"POST",
+      data:new FormData(this),
+      dataType:"JSON",
+			contentType:false,
+			cache:false,
+			processData:false,
+      success:function(data){
+				$('#append_errors ul').text('');
+				$('#append_success ul').text('');
+        if(data.errors)
+        {
+					$.each(data.errors, function(i, error){
+						$('#append_errors').show();
+            $('#append_errors ul').append("<li>" + data.errors[i] + "</li>");
+        	});
+        }else {
+          var date = moment(data.created_at).format("D MMM YYYY");
+					$('tbody').prepend("<tr class='Block"+data.id+"'>"+
+					"<td>" + data.building_block_name + "</td>"+
+					"<td>" + data.building_block_html_code + "</td>"+
+					"<td>" + date + "</td>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
+					"<i class='fas fa-edit'></i></a> "+
+					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
+					"<i class='fas fa-trash'></i></a>"+
+					"</td>"+
+					"</tr>");
+					$('#yet').hide();
+					$('#append_errors').hide();
+					$('#append_success').show();
+					$('#append_success ul').append("<li>Block Created Successfully.</li>");
+          $('#BlockModal').find('#block_form')[0].reset();
+					setTimeout(function(){ $('#append_success').hide(); },1000);
+					setTimeout(function(){ $('#BlockModal').modal('hide'); },2000);
+					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
+					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
+          location.reload();
+	      }
+      },
+    });
+  });
+
+	$(document).on('click', '.edit_modal', function(){
+		$('#fid').val($(this).data('id'));
+		$('#edit_fid').val($(this).data('id'));
+		$('#edit_building_block_name').val($(this).data('building_block_name'));
+		$('#edit_building_block_html_code').text($(this).data('building_block_html_code'));
+		$('#edit_append_errors').hide();
+		$('#edit_append_success').hide();
+	});
+
+	$('#edit_block_form').on('submit', function(event){
+    var url = "{{ url('admin/update_block') }}/";
+		event.preventDefault();
+    $.ajax({
+      url:url,
+      method:"POST",
+			data:new FormData(this),
+      dataType:"JSON",
+			contentType:false,
+			cache:false,
+			processData:false,
+			success:function(data){
+				$('#edit_append_errors ul').text('');
+				$('#edit_append_success ul').text('');
+        if(data.errors)
+        {
+					$.each(data.errors, function(i, error){
+						$('#edit_append_errors').show();
+            $('#edit_append_errors ul').append("<li>" + data.errors[i] + "</li>");
+        	});
+        }else {
+          var date = moment(data.created_at).format("D MMM YYYY");
+					$('.Block' + data.id).replaceWith(" "+
+					"<tr class='Block"+data.id+"'>"+
+					"<td>" + data.building_block_name + "</td>"+
+          "<td>" + data.parent_building_block_name + "</td>"+
+					"<td>" + date + "</td>"+
+					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-parent_block_id='"+data.parent_block_id+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
+					"<i class='fas fa-edit'></i></a> "+
+					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
+					"<i class='fas fa-trash'></i></a>"+
+					"</td>"+
+					"</tr>");
+					$('#edit_append_errors').hide();
+					$('#edit_append_success').show();
+					$('#edit_append_success ul').append("<li>Block Updated Successfully.</li>");
+          setTimeout(function(){ $('#edit_append_success').hide(); },1000);
+					setTimeout(function(){ $('#EditBlockModal').modal('hide'); },2000);
+					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
+					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
+          location.reload();
+        }
+      },
+    });
+  });
+
+});
+</script>
+<style media="screen">
+.close{
+  font-size: 1.4rem;
+}
+</style>
+@endsection

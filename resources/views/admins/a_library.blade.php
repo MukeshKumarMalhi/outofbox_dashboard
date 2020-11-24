@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="telephone=no" name="format-detection">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Autohaven Motors | @yield('title')</title>
+    <title>@yield('title') | Out Of Box Designs</title>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="shortcut icon" href="{{ asset('admin_asset/images/favicon.png') }}" type="image/x-icon" />

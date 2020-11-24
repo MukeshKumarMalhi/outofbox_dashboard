@@ -14,8 +14,10 @@ use App\Models\Portfolio;
 use App\Models\PortfolioImage;
 use App\Models\Website;
 use App\Models\Page;
+use App\Models\BuildingBlock;
+use App\Models\Layout;
 
-class WebsiteController extends Controller
+class PageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,12 +26,7 @@ class WebsiteController extends Controller
      */
     public function index()
     {
-      $websites = Website::orderBy('updated_at','DESC')->paginate(10);
-      if (request()->ajax()) {
-        $view = view('admins.websites_listing', ['websites' => $websites]);
-        return Response()->json(['status' => 'ok', 'listing' => $view->render()]);
-      }
-      return view('admins.view_websites', ['websites' => $websites]);
+        //
     }
 
     /**
@@ -51,9 +48,7 @@ class WebsiteController extends Controller
     public function store(Request $request)
     {
       $rules = array(
-        'website_name' => 'required',
-        'website_slug' => 'required',
-        'website_url' => 'required'
+        'page_name' => 'required'
       );
 
       $error = Validator::make($request->all(), $rules);
@@ -63,12 +58,12 @@ class WebsiteController extends Controller
         $id = uniqid();
         $form_data = array(
           'id' => $id,
-          'website_name' => $request->website_name,
-          'website_slug' => $request->website_slug,
-          'website_url' => $request->website_url,
+          'website_id' => $request->website_id,
+          'parent_page_id' => $request->parent_page_id,
+          'page_name' => $request->page_name
         );
-        $website = Website::create($form_data);
-        return response()->json($website, 200);
+        $page = Page::create($form_data);
+        return response()->json($page, 200);
       }
     }
 
@@ -80,14 +75,10 @@ class WebsiteController extends Controller
      */
     public function show($id)
     {
-      $pages = DB::table('pages')
-        ->leftjoin('pages as parents', 'parents.id', '=', 'pages.parent_page_id')
-        ->select('pages.*', 'parents.page_name as parent_page_name', 'parents.id as parent_page_id')
-        ->where('pages.website_id', '=', $id)
-        ->orderBy('updated_at', 'DESC')
-        ->paginate(10);
-      $website = Website::find($id);
-      return view('admins.show_website', ['pages' => $pages, 'website' => $website]);
+      $page = Page::find($id);
+      $blocks = BuildingBlock::orderBy('updated_at', 'DESC')->get()->toArray();
+      // $blocks = BuildingBlock::where('page_id','=', $id)->orderBy('updated_at', 'DESC')->paginate(10);
+      return view('admins.show_page', ['page' => $page, 'blocks' => $blocks]);
     }
 
     /**
@@ -111,22 +102,26 @@ class WebsiteController extends Controller
     public function update(Request $request, $id)
     {
       $rules = array(
-        'edit_website_name' => 'required',
-        'edit_website_slug' => 'required',
-        'edit_website_url' => 'required'
+        'edit_page_name' => 'required'
       );
 
       $error = Validator::make($request->all(), $rules);
       if($error->fails()){
         return response()->json(['errors' => $error->errors()->all()]);
       }else{
-        $website = Website::find($request->edit_fid);
-        $website->website_name = $request->edit_website_name;
-        $website->website_slug = $request->edit_website_slug;
-        $website->website_url = $request->edit_website_url;
-        $website->save();
+        $page_id = Page::find($request->edit_fid);
+        $page_id->page_name = $request->edit_page_name;
+        $page_id->parent_page_id = $request->edit_parent_page_id;
+        $page_id->save();
 
-        return response()->json($website, 200);
+        $page = DB::table('pages')
+        ->leftjoin('pages as parents', 'parents.id', '=', 'pages.parent_page_id')
+        ->select('pages.*', 'parents.page_name as parent_page_name', 'parents.id as parent_page_id')
+        ->where('pages.id', $page_id->id)
+        ->where('pages.website_id', $request->website_id)
+        ->first();
+
+        return response()->json($page, 200);
       }
     }
 
@@ -138,7 +133,7 @@ class WebsiteController extends Controller
      */
     public function destroy($id)
     {
-      $website = Website::find($id)->delete();
-      return response()->json("Website Deleted Succssfully", 200);
+      $page = Page::find($id)->delete();
+      return response()->json("Page Deleted Succssfully", 200);
     }
 }

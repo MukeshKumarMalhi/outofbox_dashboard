@@ -26,10 +26,13 @@ Route::get('admin/view_categories', [App\Http\Controllers\Admin\CategoryControll
 Route::get('admin/view_industries', [App\Http\Controllers\Admin\IndustryController::class, 'index']);
 Route::get('admin/view_portfolios', [App\Http\Controllers\Admin\PortfolioController::class, 'index']);
 Route::get('admin/view_websites', [App\Http\Controllers\Admin\WebsiteController::class, 'index']);
+Route::get('admin/view_building_blocks', [App\Http\Controllers\Admin\BuildingBlockController::class, 'index']);
 Route::post('admin/delete_portfolio_image', [App\Http\Controllers\Admin\PortfolioController::class, 'delete_portfolio_image']);
 Route::resource('categories', App\Http\Controllers\Admin\CategoryController::class);
 Route::resource('industries', App\Http\Controllers\Admin\IndustryController::class);
-Route::resource('websites', App\Http\Controllers\Admin\WebsiteController::class);
 Route::prefix('admin')->name('admin.')->group(function () {
+  Route::resource('websites', App\Http\Controllers\Admin\WebsiteController::class);
+  Route::resource('pages', App\Http\Controllers\Admin\PageController::class);
+  Route::resource('building_blocks', App\Http\Controllers\Admin\BuildingBlockController::class);
   Route::resource('portfolios', App\Http\Controllers\Admin\PortfolioController::class);
 });
