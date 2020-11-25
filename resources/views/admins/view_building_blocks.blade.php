@@ -150,7 +150,7 @@
                      @foreach($building_blocks as $block)
                        <tr class="Block{{$block->id}}">
                          <td>{{ $block->building_block_name }}</td>
-                         <td>{{ $block->building_block_html_code }}</td>
+                         <td>{{ $block->building_block_html_code }} <a style="color: blue;" href="{{ url('admin/view_block_code') }}/{{ $block->id }}">[View]</a> </td>
                          <td><?php echo date('d M Y',strtotime($block->created_at)); ?></td>
                          <td>
                            <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $block->id }}" data-building_block_name="{{ $block->building_block_name }}" data-building_block_html_code="{{ $block->building_block_html_code }}" data-toggle="modal" data-target="#EditBlockModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
@@ -211,17 +211,17 @@
             $('#append_errors ul').append("<li>" + data.errors[i] + "</li>");
         	});
         }else {
-          var date = moment(data.created_at).format("D MMM YYYY");
-					$('tbody').prepend("<tr class='Block"+data.id+"'>"+
-					"<td>" + data.building_block_name + "</td>"+
-					"<td>" + data.building_block_html_code + "</td>"+
-					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
-					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
-					"<i class='fas fa-trash'></i></a>"+
-					"</td>"+
-					"</tr>");
+          // var date = moment(data.created_at).format("D MMM YYYY");
+					// $('tbody').prepend("<tr class='Block"+data.id+"'>"+
+					// "<td>" + data.building_block_name + "</td>"+
+					// "<td>" + data.building_block_html_code + "</td>"+
+					// "<td>" + date + "</td>"+
+					// "<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
+					// "<i class='fas fa-edit'></i></a> "+
+					// "<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
+					// "<i class='fas fa-trash'></i></a>"+
+					// "</td>"+
+					// "</tr>");
 					$('#yet').hide();
 					$('#append_errors').hide();
 					$('#append_success').show();
@@ -231,6 +231,7 @@
 					setTimeout(function(){ $('#BlockModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
+          location.reload();
 	      }
       },
     });
@@ -267,18 +268,18 @@
             $('#edit_append_errors ul').append("<li>" + data.errors[i] + "</li>");
         	});
         }else {
-          var date = moment(data.created_at).format("D MMM YYYY");
-					$('.Block' + data.id).replaceWith(" "+
-					"<tr class='Block"+data.id+"'>"+
-					"<td>" + data.building_block_name + "</td>"+
-          "<td>" + data.building_block_html_code + "</td>"+
-					"<td>" + date + "</td>"+
-					"<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
-					"<i class='fas fa-edit'></i></a> "+
-					"<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
-					"<i class='fas fa-trash'></i></a>"+
-					"</td>"+
-					"</tr>");
+          // var date = moment(data.created_at).format("D MMM YYYY");
+					// $('.Block' + data.id).replaceWith(" "+
+					// "<tr class='Block"+data.id+"'>"+
+					// "<td>" + data.building_block_name + "</td>"+
+          // "<td>" + data.building_block_html_code + "</td>"+
+					// "<td>" + date + "</td>"+
+					// "<td><a href='#' class='edit_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-building_block_html_code='"+data.building_block_html_code+"' data-toggle='modal' data-target='#EditBlockModal' data-whatever='@mdo'>"+
+					// "<i class='fas fa-edit'></i></a> "+
+					// "<a href='#' class='delete_modal btn btn-outline-danger mb-2' data-id='"+data.id+"' data-building_block_name='"+data.building_block_name+"' data-toggle='modal' data-target='#DeleteBlockModal' data-whatever='@mdo'>"+
+					// "<i class='fas fa-trash'></i></a>"+
+					// "</td>"+
+					// "</tr>");
 					$('#edit_append_errors').hide();
 					$('#edit_append_success').show();
 					$('#edit_append_success ul').append("<li>Block Updated Successfully.</li>");
@@ -286,6 +287,7 @@
 					setTimeout(function(){ $('#EditBlockModal').modal('hide'); },2000);
 					setTimeout(function(){ $('body').removeClass('modal-open'); },2000);
 					setTimeout(function(){ $('.modal-backdrop').remove(); },2000);
+          location.reload();
         }
       },
     });

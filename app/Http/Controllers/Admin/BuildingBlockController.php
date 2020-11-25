@@ -34,6 +34,18 @@ class BuildingBlockController extends Controller
       return view('admins.view_building_blocks', ['building_blocks' => $building_blocks]);
     }
 
+    public function view_block_code($id)
+    {
+      $block = BuildingBlock::find($id);
+      return view('admins.view_block_code', ['block' => $block]);
+    }
+
+    public function get_blocks_ajax()
+    {
+      $building_blocks = BuildingBlock::orderBy('updated_at','DESC')->get()->toArray();
+      return response()->json($building_blocks, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

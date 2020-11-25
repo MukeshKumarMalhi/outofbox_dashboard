@@ -18,11 +18,11 @@ class Layout extends Model
     }
     public function building_block()
     {
-        return $this->hasMany('App\BuildingBlock','building_block_id');
+        return $this->belongsTo('App\BuildingBlock','building_block_id');
     }
-    public function layout()
+    public function building_block_content()
     {
-        return $this->hasMany('App\Layout','page_id');
+        return $this->hasMany('App\BuildingBlockContent','layout_id');
     }
 
     protected $fillable = [

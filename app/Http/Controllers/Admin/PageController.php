@@ -67,6 +67,34 @@ class PageController extends Controller
       }
     }
 
+    public function store_layout(Request $request)
+    {
+      $rules = array(
+        'columns' => 'required',
+        'building_block_id' => 'required',
+        'layout_order' => 'required'
+      );
+
+      $error = Validator::make($request->all(), $rules);
+      if($error->fails()){
+        return response()->json(['errors' => $error->errors()->all()]);
+      }else{
+        foreach ($request->building_block_id as $key => $value) {
+          $id = uniqid();
+          $form_data = array(
+            'id' => $id,
+            'page_id' => $request->page_id,
+            'building_block_id' => $value,
+            'layout_order' => $request->layout_order
+          );
+          $layout = Layout::create($form_data);
+        }
+        return response()->json("Layouts created succssfully", 200);
+      }
+    }
+
+
+
     /**
      * Display the specified resource.
      *
@@ -77,8 +105,14 @@ class PageController extends Controller
     {
       $page = Page::find($id);
       $blocks = BuildingBlock::orderBy('updated_at', 'DESC')->get()->toArray();
-      // $blocks = BuildingBlock::where('page_id','=', $id)->orderBy('updated_at', 'DESC')->paginate(10);
-      return view('admins.show_page', ['page' => $page, 'blocks' => $blocks]);
+      // $layouts = Layout::where('page_id', $id)->orderBy('updated_at', 'DESC')->get()->toArray();
+      $layouts = DB::table('layouts')
+                ->leftjoin('building_blocks', 'building_blocks.id', '=', 'layouts.building_block_id')
+                ->select('layouts.*', 'building_blocks.building_block_name', 'building_blocks.building_block_html_code')
+                ->where('page_id', '=', $id)
+                ->orderBy('updated_at', 'DESC')
+                ->paginate(10);
+      return view('admins.show_page', ['page' => $page, 'blocks' => $blocks, 'layouts' => $layouts]);
     }
 
     /**

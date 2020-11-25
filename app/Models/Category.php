@@ -12,7 +12,7 @@ class Category extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    public function category()
+    public function portfolio()
     {
         return $this->hasMany('App\Portfolio','category_id');
     }

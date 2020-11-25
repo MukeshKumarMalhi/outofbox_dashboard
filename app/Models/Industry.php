@@ -12,7 +12,7 @@ class Industry extends Model
   public $incrementing = false;
   protected $keyType = 'string';
 
-  public function industry()
+  public function portfolio()
   {
       return $this->hasMany('App\Portfolio','industry_id');
   }
