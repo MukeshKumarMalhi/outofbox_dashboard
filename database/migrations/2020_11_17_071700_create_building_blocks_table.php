@@ -17,6 +17,7 @@ class CreateBuildingBlocksTable extends Migration
           $table->engine="InnoDB";
           $table->string('id')->primary();
           $table->string('building_block_name')->nullable();
+          $table->string('building_block_items')->nullable();
           $table->text('building_block_html_code')->nullable();
           $table->timestamps();
         });

@@ -31,6 +31,29 @@
                 </div>
               </div>
               <div class="row mb-2">
+                <div class="form-group col-sm-12">
+                  <label class="text-pink font-weight-bold">Choose Block Items: </label>
+                  <br>
+                  <div class="bs-custom-checkbox">
+                    <div class="form-check d-inline-block mb-2 mr-2">
+                      <input type="checkbox" name="building_block_items[]" value="text" id="block_items1" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items1">Text</label>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-check d-inline-block mb-2 mr-2">
+                      <input type="checkbox" name="building_block_items[]" value="textarea" id="block_items2" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items2">Textarea</label>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-check d-inline-block mb-2 mr-2">
+                      <input type="checkbox" name="building_block_items[]" value="image" id="block_items3" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items3">Image</label>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-check d-inline-block mb-2 mr-2">
+                      <input type="checkbox" name="building_block_items[]" value="multiple_images" id="block_items4" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items4">Multiple Images</label>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-check d-inline-block mb-2 mr-2">
+                      <input type="checkbox" name="building_block_items[]" value="url" id="block_items5" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items5">URL</label>&nbsp;&nbsp;
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-2">
                 <div class="col-md">
                   <div class="form-group">
                     <label class="text-pink font-weight-bold">Block Html Code: </label>
@@ -82,6 +105,29 @@
                     <div class="form-group">
                       <label for="edit_building_block_name" class="text-pink font-weight-bold">Block Name: </label>
                       <input type="text" name="edit_building_block_name" id="edit_building_block_name" class="form-control" placeholder="Enter name" autocomplete="off" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="form-group col-sm-12">
+                    <label class="text-pink font-weight-bold">Choose Block Items: </label>
+                    <br>
+                    <div class="bs-custom-checkbox all_checks">
+                      <div class="form-check d-inline-block mb-2 mr-2">
+                        <input type="checkbox" name="edit_building_block_items[]" value="text" id="edit_block_items1" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items1">Text</label>&nbsp;&nbsp;
+                      </div>
+                      <div class="form-check d-inline-block mb-2 mr-2">
+                        <input type="checkbox" name="edit_building_block_items[]" value="textarea" id="edit_block_items2" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items2">Textarea</label>&nbsp;&nbsp;
+                      </div>
+                      <div class="form-check d-inline-block mb-2 mr-2">
+                        <input type="checkbox" name="edit_building_block_items[]" value="image" id="edit_block_items3" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items3">Image</label>&nbsp;&nbsp;
+                      </div>
+                      <div class="form-check d-inline-block mb-2 mr-2">
+                        <input type="checkbox" name="edit_building_block_items[]" value="multiple_images" id="edit_block_items4" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items4">Multiple Images</label>&nbsp;&nbsp;
+                      </div>
+                      <div class="form-check d-inline-block mb-2 mr-2">
+                        <input type="checkbox" name="edit_building_block_items[]" value="url" id="edit_block_items5" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items5">URL</label>&nbsp;&nbsp;
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -139,6 +185,7 @@
                   <thead>
                       <tr>
                           <th>Name</th>
+                          <th>Items</th>
                           <th>Code</th>
                           <th>Created at</th>
                           <th class="text-center" style="width:120px">Action</th>
@@ -150,10 +197,15 @@
                      @foreach($building_blocks as $block)
                        <tr class="Block{{$block->id}}">
                          <td>{{ $block->building_block_name }}</td>
+                         <td>{{ $block->building_block_items }}</td>
+
                          <td>{{ $block->building_block_html_code }} <a style="color: blue;" href="{{ url('admin/view_block_code') }}/{{ $block->id }}">[View]</a> </td>
                          <td><?php echo date('d M Y',strtotime($block->created_at)); ?></td>
+                         <?php
+                            $items = explode(',', $block->building_block_items);
+                           ?>
                          <td>
-                           <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $block->id }}" data-building_block_name="{{ $block->building_block_name }}" data-building_block_html_code="{{ $block->building_block_html_code }}" data-toggle="modal" data-target="#EditBlockModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
+                           <a href="#" class="edit_modal btn btn-outline-danger mb-2" data-id="{{ $block->id }}" data-building_block_name="{{ $block->building_block_name }}" data-building_block_items="<?php echo htmlspecialchars(json_encode($items), ENT_QUOTES, 'UTF-8'); ?>" data-building_block_html_code="{{ $block->building_block_html_code }}" data-toggle="modal" data-target="#EditBlockModal" data-whatever="@mdo"><i class="fas fa-edit"></i></a>
                            <a href="#" class="delete_modal btn btn-outline-danger mb-2" data-id="{{ $block->id }}" data-building_block_name="{{ $block->building_block_name }}" data-toggle="modal" data-target="#DeleteBlockModal" data-whatever="@mdo"><i class='fas fa-trash'></i></a>
                          </td>
                        </tr>
@@ -241,6 +293,8 @@
 		$('#fid').val($(this).data('id'));
 		$('#edit_fid').val($(this).data('id'));
 		$('#edit_building_block_name').val($(this).data('building_block_name'));
+    var values = $(this).data('building_block_items');
+    $(".all_checks").find('[value=' + values.join('], [value=') + ']').prop("checked", true);
 		$('#edit_building_block_html_code').text($(this).data('building_block_html_code'));
 		$('#edit_append_errors').hide();
 		$('#edit_append_success').hide();

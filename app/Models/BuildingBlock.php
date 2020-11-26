@@ -23,6 +23,6 @@ class BuildingBlock extends Model
      * @var array
      */
     protected $fillable = [
-        'id', 'building_block_name', 'building_block_html_code'
+        'id', 'building_block_name', 'building_block_items', 'building_block_html_code'
     ];
 }

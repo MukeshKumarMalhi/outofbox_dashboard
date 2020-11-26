@@ -149,7 +149,6 @@
 
     $(".form-check-input").change(function(){
       var selValue = $("input[type='radio']:checked").val();
-      console.log(selValue);
       $.ajax({
         url:"{{ url('admin/get_blocks') }}",
         method:"GET",
@@ -160,7 +159,8 @@
         success:function(data){
           $('.append_columns').text('');
           var finaldata = "";
-          var selectboxdata = "<div class='col-md'>"+
+          var k = 0;
+          var selectboxdata = "<div class='col-md col_"+k+"'>"+
             "<div class='form-group'>"+
               "<label class='text-pink font-weight-bold'>Choose Block: </label>"+
               "<select class='form-control' name='building_block_id[]'>"+
@@ -173,6 +173,7 @@
                 for (var i = 0; i < selValue; i++)
                 {
                    finaldata += selectboxdata;
+                   k += i;
                 }
                 $('.append_columns').append(finaldata);
 

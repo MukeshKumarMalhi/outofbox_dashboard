@@ -17,6 +17,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/example', function()
+// {
+//   return view('example', [
+//     'info' => 'Very cool'
+//   ]);
+// });
+
+
+
 Route::get('admin/login',[App\Http\Controllers\WebController::class, 'admin_login']);
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout']);
 

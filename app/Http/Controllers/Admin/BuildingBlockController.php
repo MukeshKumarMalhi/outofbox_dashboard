@@ -66,6 +66,7 @@ class BuildingBlockController extends Controller
     {
       $rules = array(
         'building_block_name' => 'required',
+        'building_block_items' => 'required',
         'building_block_html_code' => 'required'
       );
 
@@ -74,9 +75,11 @@ class BuildingBlockController extends Controller
         return response()->json(['errors' => $error->errors()->all()]);
       }else{
         $id = uniqid();
+        $implode = implode(',', $request->building_block_items);
         $form_data = array(
           'id' => $id,
           'building_block_name' => $request->building_block_name,
+          'building_block_items' => $implode,
           'building_block_html_code' => $request->building_block_html_code
         );
         $block = BuildingBlock::create($form_data);
@@ -123,8 +126,10 @@ class BuildingBlockController extends Controller
       if($error->fails()){
         return response()->json(['errors' => $error->errors()->all()]);
       }else{
+        $implode = implode(',', $request->edit_building_block_items);
         $block = BuildingBlock::find($request->edit_fid);
         $block->building_block_name = $request->edit_building_block_name;
+        $block->building_block_items = $implode;
         $block->building_block_html_code = $request->edit_building_block_html_code;
         $block->save();
 
