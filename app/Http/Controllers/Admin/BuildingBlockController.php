@@ -46,6 +46,12 @@ class BuildingBlockController extends Controller
       return response()->json($building_blocks, 200);
     }
 
+    public function blocks_items_form_ajax(Request $request)
+    {
+      $building_blocks = BuildingBlock::find($request->block_id);
+      return response()->json($building_blocks, 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -39,6 +39,9 @@
                       <input type="checkbox" name="building_block_items[]" value="text" id="block_items1" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items1">Text</label>&nbsp;&nbsp;
                     </div>
                     <div class="form-check d-inline-block mb-2 mr-2">
+                      <input type="checkbox" name="building_block_items[]" value="url" id="block_items5" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items5">URL</label>&nbsp;&nbsp;
+                    </div>
+                    <div class="form-check d-inline-block mb-2 mr-2">
                       <input type="checkbox" name="building_block_items[]" value="textarea" id="block_items2" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items2">Textarea</label>&nbsp;&nbsp;
                     </div>
                     <div class="form-check d-inline-block mb-2 mr-2">
@@ -46,9 +49,6 @@
                     </div>
                     <div class="form-check d-inline-block mb-2 mr-2">
                       <input type="checkbox" name="building_block_items[]" value="multiple_images" id="block_items4" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items4">Multiple Images</label>&nbsp;&nbsp;
-                    </div>
-                    <div class="form-check d-inline-block mb-2 mr-2">
-                      <input type="checkbox" name="building_block_items[]" value="url" id="block_items5" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items5">URL</label>&nbsp;&nbsp;
                     </div>
                   </div>
                 </div>
@@ -117,6 +117,9 @@
                         <input type="checkbox" name="edit_building_block_items[]" value="text" id="edit_block_items1" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items1">Text</label>&nbsp;&nbsp;
                       </div>
                       <div class="form-check d-inline-block mb-2 mr-2">
+                        <input type="checkbox" name="edit_building_block_items[]" value="url" id="edit_block_items5" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items5">URL</label>&nbsp;&nbsp;
+                      </div>
+                      <div class="form-check d-inline-block mb-2 mr-2">
                         <input type="checkbox" name="edit_building_block_items[]" value="textarea" id="edit_block_items2" class="form-check-input"><label class="form-check-label" style="vertical-align: middle;" for="block_items2">Textarea</label>&nbsp;&nbsp;
                       </div>
                       <div class="form-check d-inline-block mb-2 mr-2">
@@ -124,9 +127,6 @@
                       </div>
                       <div class="form-check d-inline-block mb-2 mr-2">
                         <input type="checkbox" name="edit_building_block_items[]" value="multiple_images" id="edit_block_items4" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items4">Multiple Images</label>&nbsp;&nbsp;
-                      </div>
-                      <div class="form-check d-inline-block mb-2 mr-2">
-                        <input type="checkbox" name="edit_building_block_items[]" value="url" id="edit_block_items5" class="form-check-input"> <label class="form-check-label" style="vertical-align: middle;" for="block_items5">URL</label>&nbsp;&nbsp;
                       </div>
                     </div>
                   </div>
@@ -290,6 +290,7 @@
   });
 
 	$(document).on('click', '.edit_modal', function(){
+    $('#EditBlockModal').find('#edit_block_form')[0].reset();
 		$('#fid').val($(this).data('id'));
 		$('#edit_fid').val($(this).data('id'));
 		$('#edit_building_block_name').val($(this).data('building_block_name'));

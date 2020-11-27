@@ -70,9 +70,7 @@ class PageController extends Controller
     public function store_layout(Request $request)
     {
       $rules = array(
-        'columns' => 'required',
-        'building_block_id' => 'required',
-        'layout_order' => 'required'
+        'building_block_id' => 'required'
       );
 
       $error = Validator::make($request->all(), $rules);
